@@ -13,6 +13,7 @@
     <script src='assets/js/app.js'></script>
     <script src='assets/js/entities/contact.js'></script>
     <script src='assets/js/apps/contacts/list/list_view.js'></script>
+    <script src='assets/js/apps/contacts/list/list_controller.js'></script>
   </head>
   <body>
     <div class='navbar navbar-inverse navbar-fixed-top'>
@@ -30,18 +31,11 @@
         that it gets replaced by our app as soon as we start it.
       </p>
     </div>
-    <div class='container' id='list-region'></div>
-    <script id='contact-template' type='text/template'>
-      <p class='clickable'><%= firstName %> <%= lastName %></p>
-      <hr>
-    </script>
     <script id='contact-list-item' type='text/template'>
       <%= firstName %> <%= lastName %>
     </script>
     <script>
-      $(function() {
-        app();
-      })
+      ContactManager.start()
     </script>
   </body>
 </html>
