@@ -3,9 +3,10 @@ var app;
 
 app = function() {
   var ContactManager;
-  ContactManager = new Marionette.Application();
+  ContactManager = new Marionette.Application;
   ContactManager.addRegions({
-    mainRegion: '#main-region'
+    mainRegion: '#main-region',
+    listRegion: '#list-region'
   });
   ContactManager.StaticView = Marionette.ItemView.extend({
     id: 'static-view',
@@ -13,12 +14,17 @@ app = function() {
     className: 'instruction',
     template: '#static-template'
   });
+  ContactManager.ListView = Marionette.ItemView.extend({
+    tagName: 'ul',
+    template: '#list-template'
+  });
   ContactManager.on('initialize:after', function() {
     var staticView;
     staticView = new ContactManager.StaticView({
       template: '#different-static-template'
     });
-    return ContactManager.mainRegion.show(staticView);
+    ContactManager.mainRegion.show(staticView);
+    return ContactManager.listRegion.show(new ContactManager.ListView);
   });
   return ContactManager.start();
 };

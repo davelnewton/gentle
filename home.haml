@@ -23,11 +23,17 @@
         Here is static content in the web page. You'll notice
         that it gets replaced by our app as soon as we start it.
 
+    #list-region.container
+      %p This will be replaced by a list.
+
     %script{ type: "text/template", id: "static-template" }
       %p This is text that was rendered by our Marionette app.
 
     %script{ type: "text/template", id: "different-static-template" }
       %p Text from a different template...
+
+    %script{ type: "text/template", id: "list-template" }
+      %li I'm a list item!
 
     :javascript
       $(function() {
