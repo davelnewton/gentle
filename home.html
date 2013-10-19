@@ -31,8 +31,18 @@
         that it gets replaced by our app as soon as we start it.
       </p>
     </div>
+    <script id='contact-list' type='text/template'>
+      <thead>
+      <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      </tr>
+      </thead>
+      <tbody></tbody>
+    </script>
     <script id='contact-list-item' type='text/template'>
-      <%= firstName %> <%= lastName %>
+      <td><%= firstName %></td>
+      <td><%= lastName %></td>
     </script>
     <script>
       ContactManager.start()
