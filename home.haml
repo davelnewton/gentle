@@ -8,6 +8,7 @@
     %script{ src: "http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore.js" }
     %script{ src: "http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone.js" }
     %script{ src: "http://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/1.1.0-bundled/backbone.marionette.js" }
+    %script{ src: "assets/js/app.js" }
     %link{ href: "./assets/css/bootstrap.css",   rel: "stylesheet" }
     %link{ href: "./assets/css/application.css", rel: "stylesheet" }
   %body
@@ -30,19 +31,5 @@
 
     :javascript
       $(function() {
-        var ContactManager = new Marionette.Application();
-        ContactManager.addRegions({
-          mainRegion: "#main-region"
-        });
-        
-        ContactManager.StaticView = Marionette.ItemView.extend({
-          template: "#static-template"
-        });
-        
-        ContactManager.on("initialize:after", function() {
-          var staticView = new ContactManager.StaticView({ template: "#different-static-template" });
-          ContactManager.mainRegion.show(staticView);
-        });
-
-        ContactManager.start();
+        app();
       })
