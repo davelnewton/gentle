@@ -19,8 +19,9 @@ app = function() {
   });
   ContactManager.Contact = Backbone.Model.extend({
     defaults: {
-      firstName: '[No first name given]',
-      lastName: '[No last name given]'
+      firstName: '[No first name provided]',
+      lastName: '[No last name provided]',
+      phoneNumber: '[No phone number provided]'
     }
   });
   ContactManager.on('initialize:after', function() {
