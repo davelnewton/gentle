@@ -5,17 +5,7 @@ app = function() {
   var ContactManager;
   ContactManager = new Marionette.Application;
   ContactManager.addRegions({
-    mainRegion: '#main-region',
-    listRegion: '#list-region'
-  });
-  ContactManager.ContactView = Marionette.ItemView.extend({
-    template: '#contact-template',
-    events: {
-      'click p.clickable': 'alertPhoneNumber'
-    },
-    alertPhoneNumber: function() {
-      return alert(this.model.escape('phoneNumber'));
-    }
+    mainRegion: '#main-region'
   });
   ContactManager.Contact = Backbone.Model.extend({
     defaults: {
@@ -24,17 +14,49 @@ app = function() {
       phoneNumber: '[No phone number provided]'
     }
   });
+  ContactManager.ContactItemView = Marionette.ItemView.extend({
+    tagName: 'li',
+    template: '#contact-list-item'
+  });
+  ContactManager.ContactsView = Marionette.CollectionView.extend({
+    tagName: 'ul',
+    itemView: ContactManager.ContactItemView
+  });
+  ContactManager.ContactCollection = Backbone.Collection.extend({
+    model: ContactManager.Contact,
+    comparator: function(c) {
+      return "" + (c.get('firstName')) + " " + (c.get('lastName'));
+    }
+  });
   ContactManager.on('initialize:after', function() {
-    var alice, aliceView;
-    alice = new ContactManager.Contact({
-      firstName: 'Alice',
-      lastName: 'Arten',
-      phoneNumber: '555-0184'
+    var contacts, contactsListView;
+    contacts = new ContactManager.ContactCollection([
+      {
+        firstName: 'Bob',
+        lastName: 'Brigham',
+        phoneNumber: '555-0163'
+      }, {
+        firstName: 'Alice',
+        lastName: 'Tampen',
+        phoneNumber: '555-0184'
+      }, {
+        firstName: 'Alice',
+        lastName: 'Smith',
+        phoneNumber: '555-0184'
+      }, {
+        firstName: 'Alice',
+        lastName: 'Arten',
+        phoneNumber: '555-0184'
+      }, {
+        firstName: 'Charlie',
+        lastName: 'Campbell',
+        phoneNumber: '555-0129'
+      }
+    ]);
+    contactsListView = new ContactManager.ContactsView({
+      collection: contacts
     });
-    aliceView = new ContactManager.ContactView({
-      model: alice
-    });
-    return ContactManager.mainRegion.show(aliceView);
+    return ContactManager.mainRegion.show(contactsListView);
   });
   return ContactManager.start();
 };
