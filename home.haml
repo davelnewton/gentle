@@ -1,0 +1,45 @@
+!!! HTML5
+%html{ lang: "en" }
+  %head
+    %meta{ charset: "utf-8" }
+    %title Marionette Contact Manager
+    %script{ type: "text/javascript", src: "http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js" }
+    %script{ type: "text/javascript", src: "assets/js/vendor/json2.js" }
+    %script{ type: "text/javascript", src: "http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore.js" }
+    %script{ type: "text/javascript", src: "http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone.js" }
+    %script{ type: "text/javascript", src: "http://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/1.1.0-bundled/backbone.marionette.js" }
+    %link{ href: "./assets/css/bootstrap.css",   rel: "stylesheet" }
+    %link{ href: "./assets/css/application.css", rel: "stylesheet" }
+  %body
+    %div.navbar.navbar-inverse.navbar-fixed-top
+      %div.navbar-inner
+        %div.container
+          %span.brand
+            Contact Manager
+
+    #main-region.container
+      %p 
+        Here is static content in the web page. You'll notice
+        that it gets replaced by our app as soon as we start it.
+
+    %script{ type: "text/template", id: "static-template" }
+      %p This is text that was rendered by our Marionette app.
+
+    :javascript
+      $(function() {
+        var ContactManager = new Marionette.Application();
+        ContactManager.addRegions({
+          mainRegion: "#main-region"
+        });
+        
+        ContactManager.StaticView = Marionette.ItemView.extend({
+          template: "#static-template"
+        });
+        
+        ContactManager.on("initialize:after", function() {
+          var staticView = new ContactManager.StaticView();
+          ContactManager.mainRegion.show(staticView);
+        });
+
+        ContactManager.start();
+      })
