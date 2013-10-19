@@ -30,6 +30,9 @@
     <script id='static-template' type='text/template'>
       <p>This is text that was rendered by our Marionette app.</p>
     </script>
+    <script id='different-static-template' type='text/template'>
+      <p>Text from a different template...</p>
+    </script>
     <script>
       $(function() {
         var ContactManager = new Marionette.Application();
@@ -42,7 +45,7 @@
         });
         
         ContactManager.on("initialize:after", function() {
-          var staticView = new ContactManager.StaticView();
+          var staticView = new ContactManager.StaticView({ template: "#different-static-template" });
           ContactManager.mainRegion.show(staticView);
         });
       

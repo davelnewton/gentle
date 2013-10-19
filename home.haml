@@ -25,6 +25,9 @@
     %script{ type: "text/template", id: "static-template" }
       %p This is text that was rendered by our Marionette app.
 
+    %script{ type: "text/template", id: "different-static-template" }
+      %p Text from a different template...
+
     :javascript
       $(function() {
         var ContactManager = new Marionette.Application();
@@ -37,7 +40,7 @@
         });
         
         ContactManager.on("initialize:after", function() {
-          var staticView = new ContactManager.StaticView();
+          var staticView = new ContactManager.StaticView({ template: "#different-static-template" });
           ContactManager.mainRegion.show(staticView);
         });
 
