@@ -8,23 +8,21 @@ app = function() {
     mainRegion: '#main-region',
     listRegion: '#list-region'
   });
-  ContactManager.StaticView = Marionette.ItemView.extend({
-    id: 'static-view',
-    tagName: 'span',
-    className: 'instruction',
-    template: '#static-template'
+  ContactManager.ContactView = Marionette.ItemView.extend({
+    template: '#contact-template'
   });
-  ContactManager.ListView = Marionette.ItemView.extend({
-    tagName: 'ul',
-    template: '#list-template'
-  });
+  ContactManager.Contact = Backbone.Model.extend();
   ContactManager.on('initialize:after', function() {
-    var staticView;
-    staticView = new ContactManager.StaticView({
-      template: '#different-static-template'
+    var alice, aliceView;
+    alice = new ContactManager.Contact({
+      firstName: 'Alice',
+      lastName: 'Arten',
+      phoneNumber: '555-0184'
     });
-    ContactManager.mainRegion.show(staticView);
-    return ContactManager.listRegion.show(new ContactManager.ListView);
+    aliceView = new ContactManager.ContactView({
+      model: alice
+    });
+    return ContactManager.mainRegion.show(aliceView);
   });
   return ContactManager.start();
 };

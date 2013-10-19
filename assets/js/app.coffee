@@ -5,20 +5,20 @@ app = ->
     mainRegion: '#main-region'
     listRegion: '#list-region'
 
-  ContactManager.StaticView = Marionette.ItemView.extend
-    id: 'static-view'
-    tagName: 'span'
-    className: 'instruction'
-    template: '#static-template'
+  ContactManager.ContactView = Marionette.ItemView.extend
+    template: '#contact-template'
 
-  ContactManager.ListView = Marionette.ItemView.extend
-    tagName: 'ul'
-    template: '#list-template'
+  ContactManager.Contact = Backbone.Model.extend()
 
   ContactManager.on 'initialize:after', ->
-    staticView = new ContactManager.StaticView
-      template: '#different-static-template'
-    ContactManager.mainRegion.show staticView
-    ContactManager.listRegion.show new ContactManager.ListView
+    alice = new ContactManager.Contact
+      firstName: 'Alice'
+      lastName: 'Arten'
+      phoneNumber: '555-0184'
+
+    aliceView = new ContactManager.ContactView
+      model: alice
+
+    ContactManager.mainRegion.show aliceView
 
   ContactManager.start()

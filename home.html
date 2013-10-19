@@ -28,17 +28,8 @@
         that it gets replaced by our app as soon as we start it.
       </p>
     </div>
-    <div class='container' id='list-region'>
-      <p>This will be replaced by a list.</p>
-    </div>
-    <script id='static-template' type='text/template'>
-      <p>This is text that was rendered by our Marionette app.</p>
-    </script>
-    <script id='different-static-template' type='text/template'>
-      <p>Text from a different template...</p>
-    </script>
-    <script id='list-template' type='text/template'>
-      <li>I'm a list item!</li>
+    <script id='contact-template' type='text/template'>
+      <p><%= firstName %> <%= lastName %></p>
     </script>
     <script>
       $(function() {
