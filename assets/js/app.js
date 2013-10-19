@@ -8,17 +8,9 @@ ContactManager.addRegions({
 });
 
 app = function() {
-  ContactManager.ContactItemView = Marionette.ItemView.extend({
-    tagName: 'li',
-    template: '#contact-list-item'
-  });
-  ContactManager.ContactsView = Marionette.CollectionView.extend({
-    tagName: 'ul',
-    itemView: ContactManager.ContactItemView
-  });
   ContactManager.on('initialize:after', function() {
     var contactsListView;
-    contactsListView = new ContactManager.ContactsView({
+    contactsListView = new ContactManager.ContactsApp.List.Contacts({
       collection: ContactManager.request('contact:entities')
     });
     return ContactManager.mainRegion.show(contactsListView);
