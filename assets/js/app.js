@@ -9,7 +9,13 @@ app = function() {
     listRegion: '#list-region'
   });
   ContactManager.ContactView = Marionette.ItemView.extend({
-    template: '#contact-template'
+    template: '#contact-template',
+    events: {
+      'click p': 'alertPhoneNumber'
+    },
+    alertPhoneNumber: function() {
+      return alert(this.model.escape('phoneNumber'));
+    }
   });
   ContactManager.Contact = Backbone.Model.extend({
     defaults: {
