@@ -8,7 +8,10 @@ app = ->
   ContactManager.ContactView = Marionette.ItemView.extend
     template: '#contact-template'
 
-  ContactManager.Contact = Backbone.Model.extend()
+  ContactManager.Contact = Backbone.Model.extend
+    defaults:
+      firstName: '[No first name given]'
+      lastName: '[No last name given]'
 
   ContactManager.on 'initialize:after', ->
     alice = new ContactManager.Contact
