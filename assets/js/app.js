@@ -8,6 +8,9 @@ app = function() {
     mainRegion: '#main-region'
   });
   ContactManager.StaticView = Marionette.ItemView.extend({
+    id: 'static-view',
+    tagName: 'span',
+    className: 'instruction',
     template: '#static-template'
   });
   ContactManager.on('initialize:after', function() {
