@@ -11,7 +11,7 @@ app = function() {
   ContactManager.ContactView = Marionette.ItemView.extend({
     template: '#contact-template',
     events: {
-      'click p': 'alertPhoneNumber'
+      'click p.clickable': 'alertPhoneNumber'
     },
     alertPhoneNumber: function() {
       return alert(this.model.escape('phoneNumber'));

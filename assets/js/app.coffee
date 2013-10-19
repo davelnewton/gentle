@@ -9,7 +9,7 @@ app = ->
     template: '#contact-template'
     
     events:
-      'click p': 'alertPhoneNumber'
+      'click p.clickable': 'alertPhoneNumber'
     
     alertPhoneNumber: ->
       alert @model.escape('phoneNumber')
