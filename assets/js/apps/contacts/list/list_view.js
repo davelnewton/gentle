@@ -2,7 +2,18 @@
 ContactManager.module('ContactsApp.List', function(List, ContactManager, Backbone, Marionette, $, _) {
   List.Contact = Marionette.ItemView.extend({
     tagName: 'tr',
-    template: '#contact-list-item'
+    template: '#contact-list-item',
+    events: {
+      'click': 'highlightName',
+      'click button.js-delete': 'deleteContact'
+    },
+    highlightName: function(e) {
+      return this.$el.toggleClass('warning');
+    },
+    deleteContact: function(e) {
+      e.stopPropagation();
+      return this.trigger('contact:delete', this.model);
+    }
   });
   return List.Contacts = Marionette.CompositeView.extend({
     tagName: 'table',
