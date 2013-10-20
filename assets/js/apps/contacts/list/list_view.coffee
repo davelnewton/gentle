@@ -13,6 +13,11 @@ ContactManager.module 'ContactsApp.List', (List, ContactManager, Backbone, Mario
       e.stopPropagation()
       @trigger 'contact:delete', @model
 
+    remove: ->
+      self = @
+      @$el.fadeOut ->
+        Marionette.ItemView.prototype.remove.call self;
+
   List.Contacts = Marionette.CompositeView.extend
     tagName: 'table'
     className: 'table table-hover'

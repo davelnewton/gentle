@@ -13,6 +13,13 @@ ContactManager.module('ContactsApp.List', function(List, ContactManager, Backbon
     deleteContact: function(e) {
       e.stopPropagation();
       return this.trigger('contact:delete', this.model);
+    },
+    remove: function() {
+      var self;
+      self = this;
+      return this.$el.fadeOut(function() {
+        return Marionette.ItemView.prototype.remove.call(self);
+      });
     }
   });
   return List.Contacts = Marionette.CompositeView.extend({
