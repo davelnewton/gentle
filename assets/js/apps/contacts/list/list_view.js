@@ -27,6 +27,15 @@ ContactManager.module('ContactsApp.List', function(List, ContactManager, Backbon
     className: 'table table-hover',
     template: '#contact-list',
     itemView: List.Contact,
-    itemViewContainer: 'tbody'
+    itemViewContainer: 'tbody',
+    onItemviewContactDelete: function(arg0) {
+      var fullName, model;
+      model = arg0.model;
+      fullName = "" + (model.get('firstName')) + " " + (model.get('lastName'));
+      console.log(model);
+      return $.jGrowl("Deleted " + fullName, {
+        life: 1000
+      });
+    }
   });
 });

@@ -24,3 +24,9 @@ ContactManager.module 'ContactsApp.List', (List, ContactManager, Backbone, Mario
     template: '#contact-list'
     itemView: List.Contact
     itemViewContainer: 'tbody'
+    onItemviewContactDelete: (arg0) ->
+      model = arg0.model
+      fullName = "#{model.get('firstName')} #{model.get('lastName')}"
+      console.log model
+      $.jGrowl "Deleted #{fullName}",
+        life: 1000
