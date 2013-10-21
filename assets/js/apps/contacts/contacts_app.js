@@ -14,6 +14,11 @@ ContactManager.module('ContactsApp', function(ContactsApp, ContactManager, Backb
       return ContactsApp.List.Controller.listContacts();
     }
   };
+  ContactManager.on('contacts:list', function() {
+    console.log('DBG "contacts:list" handler; nav#contacts and list contacts...');
+    this.navigate('contacts');
+    return ContactsApp.List.Controller.listContacts();
+  });
   ContactManager.addInitializer(function() {
     console.log('DBG addInitializer enter; creating router...');
     return new ContactsApp.Router({

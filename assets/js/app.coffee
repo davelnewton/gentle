@@ -16,8 +16,6 @@ ContactManager.on 'initialize:after', ->
   Backbone.history.start() if Backbone.history
 
   console.log "DBG Checking fragment; '#{@currentRoute()}' (#{!!@currentRoute()})..."
-  unless !!@currentRoute()
-    @navigate 'contacts'
-    ContactsApp.List.Controller.listContacts()
+  ContactManager.trigger 'contacts:list' unless !!@currentRoute()
 
 window.ContactManager = ContactManager

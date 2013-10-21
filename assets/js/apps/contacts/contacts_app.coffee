@@ -11,6 +11,12 @@ ContactManager.module 'ContactsApp', (ContactsApp, ContactManager, Backbone, Mar
       console.log 'DBG listContacts via route...'
       ContactsApp.List.Controller.listContacts();
 
+  ContactManager.on 'contacts:list', ->
+    console.log 'DBG "contacts:list" handler; nav#contacts and list contacts...'
+    @navigate 'contacts'
+    ContactsApp.List.Controller.listContacts()
+
+
   ContactManager.addInitializer ->
     console.log 'DBG addInitializer enter; creating router...'
     new ContactsApp.Router
