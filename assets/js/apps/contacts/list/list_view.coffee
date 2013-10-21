@@ -1,17 +1,25 @@
 ContactManager.module 'ContactsApp.List', (List, ContactManager, Backbone, Marionette, $, _) ->
   List.Contact = Marionette.ItemView.extend
-    tagName: 'tr'
+    tagName:  'tr'
     template: '#contact-list-item'
+
     events:
       'click': 'highlightName'
+      'click td a.js-show': 'showContact'
       'click button.js-delete': 'deleteContact'
 
     highlightName: (e) ->
       @$el.toggleClass 'warning'
 
     deleteContact: (e) ->
+      e.preventDefault()
       e.stopPropagation()
       @trigger 'contact:delete', @model
+
+    showContact: (e) ->
+      e.preventDefault()
+      e.stopPropagation()
+      @trigger 'contact:show', @model
 
     remove: ->
       self = @
