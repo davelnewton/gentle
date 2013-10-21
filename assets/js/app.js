@@ -9,14 +9,23 @@
     mainRegion: '#main-region'
   });
 
+  ContactManager.navigate = function(route, options) {
+    options || (options = {});
+    return Backbone.history.navigate(route, options);
+  };
+
+  ContactManager.currentRoute = function() {
+    return Backbone.history.fragment;
+  };
+
   ContactManager.on('initialize:after', function() {
     console.log('DBG Main initialize:after handler enter...');
     if (Backbone.history) {
       Backbone.history.start();
     }
-    console.log("DBG Checking fragment; '" + Backbone.history.fragment + "' (" + (!!Backbone.history.fragment) + ")...");
-    if (!Backbone.history.fragment) {
-      Backbone.history.navigate('contacts');
+    console.log("DBG Checking fragment; '" + (this.currentRoute()) + "' (" + (!!this.currentRoute()) + ")...");
+    if (!this.currentRoute()) {
+      this.navigate('contacts');
       return ContactsApp.List.Controller.listContacts();
     }
   });

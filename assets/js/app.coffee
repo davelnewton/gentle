@@ -4,13 +4,20 @@ console.log 'DBG Created ContactManager', ContactManager
 ContactManager.addRegions
   mainRegion: '#main-region'
 
+ContactManager.navigate = (route, options) ->
+  options || (options = {})
+  Backbone.history.navigate route, options
+
+ContactManager.currentRoute = ->
+  Backbone.history.fragment
+
 ContactManager.on 'initialize:after', ->
   console.log 'DBG Main initialize:after handler enter...'
   Backbone.history.start() if Backbone.history
 
-  console.log "DBG Checking fragment; '#{Backbone.history.fragment}' (#{!!Backbone.history.fragment})..."
-  unless !!Backbone.history.fragment
-    Backbone.history.navigate('contacts')
+  console.log "DBG Checking fragment; '#{@currentRoute()}' (#{!!@currentRoute()})..."
+  unless !!@currentRoute()
+    @navigate 'contacts'
     ContactsApp.List.Controller.listContacts()
 
 window.ContactManager = ContactManager
