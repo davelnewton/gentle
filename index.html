@@ -56,7 +56,7 @@
       <td><%= firstName %></td>
       <td><%= lastName %></td>
       <td>
-        <a href="#" class="btn btn-small js-show">
+        <a href="#contacts/<%= id %>" class="btn btn-small js-show">
           <i class="icon-eye-open"></i>
           Show
         </a>
@@ -70,6 +70,7 @@
     <script id="contact-view" type="text/template">
       <h1><%= firstName %> <%= lastName %></h1>
       <p><strong>Phone number: <%= phoneNumber %></strong></p>
+      <a href="#contacts" class="js-back-to-contacts">Back to Contacts</a>
     </script>
 
     <script type="text/javascript">
