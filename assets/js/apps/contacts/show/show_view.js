@@ -1,8 +1,13 @@
 (function() {
   ContactManager.module('ContactsApp.Show', function(Show, ContactManager, Backbone, Marionette, $, _) {
-    return Show.Contact = Marionette.ItemView.extend({
+    Show.Contact = Marionette.ItemView.extend({
       template: '#contact-view'
     });
+    return Show.Contact.viewFor = function(model) {
+      return new Show.Contact({
+        model: model
+      });
+    };
   });
 
 }).call(this);
