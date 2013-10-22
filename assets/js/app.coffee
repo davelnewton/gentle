@@ -11,6 +11,10 @@ ContactManager.navigate = (route, options) ->
 ContactManager.currentRoute = ->
   Backbone.history.fragment
 
+ContactManager.stopEvent = (e) ->
+  e.preventDefault()
+  e.stopPropagation()
+
 ContactManager.on 'initialize:after', ->
   console.log 'DBG Main initialize:after handler enter...'
   Backbone.history.start() if Backbone.history

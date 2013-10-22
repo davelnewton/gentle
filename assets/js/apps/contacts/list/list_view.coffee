@@ -12,13 +12,11 @@ ContactManager.module 'ContactsApp.List', (List, ContactManager, Backbone, Mario
       @$el.toggleClass 'warning'
 
     deleteContact: (e) ->
-      e.preventDefault()
-      e.stopPropagation()
+      ContactManager.stopEvent e
       @trigger 'contact:delete', @model
 
     showContact: (e) ->
-      e.preventDefault()
-      e.stopPropagation()
+      ContactManager.stopEvent e
       @trigger 'contact:show', @model
 
     remove: ->

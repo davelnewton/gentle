@@ -12,13 +12,11 @@
         return this.$el.toggleClass('warning');
       },
       deleteContact: function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+        ContactManager.stopEvent(e);
         return this.trigger('contact:delete', this.model);
       },
       showContact: function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+        ContactManager.stopEvent(e);
         return this.trigger('contact:show', this.model);
       },
       remove: function() {
