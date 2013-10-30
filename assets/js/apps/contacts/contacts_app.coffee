@@ -3,7 +3,7 @@ ContactManager.module 'ContactsApp', (ContactsApp, ContactManager, Backbone, Mar
 
   ContactsApp.Router = Marionette.AppRouter.extend
     appRoutes:
-      'contacts': 'listContacts'
+      'contacts':     'listContacts'
       'contacts/:id': 'showContact'
 
   console.log 'DBG Created ContactsApp.Router'

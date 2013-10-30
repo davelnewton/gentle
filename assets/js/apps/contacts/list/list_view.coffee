@@ -17,6 +17,7 @@ ContactManager.module 'ContactsApp.List', (List, ContactManager, Backbone, Mario
 
     showContact: (e) ->
       ContactManager.stopEvent e
+      console.log 'DBG list_view showContact handler...'
       @trigger 'contact:show', @model
 
     remove: ->

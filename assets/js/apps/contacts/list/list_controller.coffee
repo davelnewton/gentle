@@ -7,10 +7,10 @@ ContactManager.module 'ContactsApp.List', (List, ContactManager, Backbone, Mario
 
       contactsListView.on 'itemview:contact:delete', (childView, model) ->
         console.log 'DBG Entering List.Controller itemview:contact:delete handler...'
-        contacts.remove model
+        model.destroy()
 
       contactsListView.on 'itemview:contact:show', (childView, model) ->
-        console.log 'DBG Entering List.Controller itemview:contact:show handler...'
+        console.log "DBG Entering List.Controller itemview:contact:show handler, model ID=#{model.get('id')}"
         ContactManager.trigger 'contact:show', model.get('id')
 
       ContactManager.mainRegion.show contactsListView
