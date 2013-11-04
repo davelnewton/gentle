@@ -48,10 +48,19 @@ ContactManager.module 'Entities', (Entities, ContactManager, Backbone, Marionett
       contacts
 
     getContactEntity: (id) ->
-      console.log 'DBG Entering API#getContactEntity...'
+      console.log "DBG Entering API#getContactEntity(#{id})..."
+      defer = $.Deferred()
       contact = new Entities.Contact { id: id }
-      contact.fetch()
-      contact
+      fetchFunc = ->
+        contact.fetch
+          success: (data) -> 
+            console.log 'DBG   Retrieved contact, returning resolved data...'
+            defer.resolve data
+          error: (data) -> 
+            console.log 'DBG   Failed to retrieve contact, returning undefined...'
+            defer.resolve undefined
+      setTimeout fetchFunc, 2000
+      defer.promise()
 
   ContactManager.reqres.setHandler 'contact:entities', ->
     console.log "DBG ContactManager contact:entities..."

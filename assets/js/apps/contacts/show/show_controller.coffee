@@ -3,18 +3,21 @@ ContactManager.module 'ContactsApp.Show', (Show, ContactManager, Backbone, Mario
     events:
       'click a.js-back-to-contacts': 'backToContacts'
 
-    # XXX TODO Show.Contact.viewFor
     showContact: (id) ->
       console.log "DBG Entering Show.Controller#showContact(#{id})..."
-      contact = ContactManager.request 'contact:entity', id
-      contactView = if contact
-        new Show.Contact
-          model: contact
-      else
-        new Show.missingContact()
-     
-      console.log contactView
-      ContactManager.mainRegion.show contactView
+      deferredContact = ContactManager.request 'contact:entity', id
+      $.when(deferredContact).done (contact) ->
+        console.log "    showContact fetch complete. Processing...", contact
+        contactView = if contact
+          console.log "DBG   ... fetched contact", contact
+          new Show.Contact
+            model: contact
+        else
+          console.log "DBG   ... did not fetch contact"
+          new Show.missingContact()
+       
+        console.log contactView
+        ContactManager.mainRegion.show contactView
 
     backToContacts: (e) ->
       ContactManager.stopEvent e

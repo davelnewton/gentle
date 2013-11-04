@@ -5,14 +5,18 @@ ContactManager.module('ContactsApp.Show', function(Show, ContactManager, Backbon
       'click a.js-back-to-contacts': 'backToContacts'
     },
     showContact: function(id) {
-      var contact, contactView;
+      var deferredContact;
       console.log("DBG Entering Show.Controller#showContact(" + id + ")...");
-      contact = ContactManager.request('contact:entity', id);
-      contactView = contact ? new Show.Contact({
-        model: contact
-      }) : new Show.missingContact();
-      console.log(contactView);
-      return ContactManager.mainRegion.show(contactView);
+      deferredContact = ContactManager.request('contact:entity', id);
+      return $.when(deferredContact).done(function(contact) {
+        var contactView;
+        console.log("    showContact fetch complete. Processing...", contact);
+        contactView = contact ? (console.log("DBG   ... fetched contact", contact), new Show.Contact({
+          model: contact
+        })) : (console.log("DBG   ... did not fetch contact"), new Show.missingContact());
+        console.log(contactView);
+        return ContactManager.mainRegion.show(contactView);
+      });
     },
     backToContacts: function(e) {
       ContactManager.stopEvent(e);
