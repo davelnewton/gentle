@@ -37,20 +37,31 @@ ContactManager.module('Entities', function(Entities, ContactManager, Backbone, M
     contacts.forEach(function(contact) {
       return contact.save();
     });
-    return contacts;
+    return contacts.models;
   };
   API = {
     getContactEntities: function() {
-      var contacts;
+      var contacts, defer, promise;
       console.log('DBG Entering API#getContactEntities...');
+      defer = $.Deferred();
       contacts = new Entities.ContactCollection();
-      contacts.fetch();
-      if (contacts.length === 0) {
-        console.log('DBG   No contacts; initializing...');
-        return initializeContacts();
-      }
-      console.log("DBG   Have contacts; returning list of size " + contacts.length + "...");
-      return contacts;
+      contacts.fetch({
+        success: function(data) {
+          console.log('DBG   Fetched; resolving data', data);
+          return defer.resolve(data);
+        }
+      });
+      promise = defer.promise();
+      $.when(promise).done(function(contacts) {
+        var models;
+        console.log('DBG   Done fetching contacts...');
+        if (contacts.length === 0) {
+          console.log('DBG   No contacts; initializing...');
+          models = initializeContacts();
+          return contacts.reset(models);
+        }
+      });
+      return promise;
     },
     getContactEntity: function(id) {
       var contact, defer, fetchFunc;
@@ -62,11 +73,9 @@ ContactManager.module('Entities', function(Entities, ContactManager, Backbone, M
       fetchFunc = function() {
         return contact.fetch({
           success: function(data) {
-            console.log('DBG   Retrieved contact, returning resolved data...');
             return defer.resolve(data);
           },
           error: function(data) {
-            console.log('DBG   Failed to retrieve contact, returning undefined...');
             return defer.resolve(void 0);
           }
         });

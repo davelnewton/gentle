@@ -34,18 +34,25 @@ ContactManager.module 'Entities', (Entities, ContactManager, Backbone, Marionett
       { id: 3, firstName: "Charlie", lastName: "Campbell", phoneNumber: "555-0129" }
     ]
     contacts.forEach (contact) -> contact.save()
-    contacts
+    contacts.models
 
   API =
     getContactEntities: ->
       console.log 'DBG Entering API#getContactEntities...'
+      defer = $.Deferred()
       contacts = new Entities.ContactCollection()
-      contacts.fetch()
-      if contacts.length == 0
-        console.log 'DBG   No contacts; initializing...'
-        return initializeContacts()
-      console.log "DBG   Have contacts; returning list of size #{contacts.length}..."
-      contacts
+      contacts.fetch
+        success: (data) -> 
+          console.log 'DBG   Fetched; resolving data', data
+          defer.resolve data
+      promise = defer.promise()
+      $.when(promise).done (contacts) ->
+        console.log 'DBG   Done fetching contacts...'
+        if contacts.length == 0
+          console.log 'DBG   No contacts; initializing...'
+          models = initializeContacts()
+          contacts.reset models
+      promise
 
     getContactEntity: (id) ->
       console.log "DBG Entering API#getContactEntity(#{id})..."
@@ -53,12 +60,8 @@ ContactManager.module 'Entities', (Entities, ContactManager, Backbone, Marionett
       contact = new Entities.Contact { id: id }
       fetchFunc = ->
         contact.fetch
-          success: (data) -> 
-            console.log 'DBG   Retrieved contact, returning resolved data...'
-            defer.resolve data
-          error: (data) -> 
-            console.log 'DBG   Failed to retrieve contact, returning undefined...'
-            defer.resolve undefined
+          success: (data) -> defer.resolve data
+          error: (data) -> defer.resolve undefined
       setTimeout fetchFunc, 2000
       defer.promise()
 
